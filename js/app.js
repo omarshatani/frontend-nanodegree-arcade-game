@@ -31,7 +31,9 @@ class Player {
     }
 
     update() {
-        //
+        if (this.y > 400 || this.y < 56) {
+            this.y = 400;
+        }
     } 
 
     render() {
