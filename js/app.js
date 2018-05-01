@@ -88,11 +88,15 @@ class Player {
     }
 }
 
-class Star () {
-    constructor() {
-        this.x: 0;
-        this.y: 0;
-        this.sprite = `images/${allStars[0]}.png`;
+class Gem {
+    constructor(name) {
+        this.x = gemPositions.x[Math.floor((Math.random() * 5))];
+        this.y = gemPositions.y[Math.floor((Math.random() * 3))];
+        this.sprite = `images/${name}.png`;
+    }
+
+        render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
 
@@ -105,10 +109,24 @@ class Star () {
 var hasCollided = false;
 let allEnemies = [];
 let enemyInitialPosition = [56, 142, 228]
+let allGems = [];
+let gemNames = ['gem-blue', 'gem-orange', 'gem-green'];
+let gemPositions = { 
+    x: [-2, 99, 200, 301, 402],
+    y: [56, 142, 228]
+    };
+
 for (let i = 0; i < 5; i++) {
     let enemy = new Enemy();
     enemy.name = i;
     allEnemies.push(enemy);
+}
+
+for (name of gemNames) {
+    let gem = new Gem(name);
+
+    allGems.push(gem);
+    
 }
 
 let player = new Player();
