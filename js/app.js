@@ -1,37 +1,36 @@
-// Enemies our player must avoid
-var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-    this.velocity = (Math.random() * 280) + 120;
-    this.x = -120;
-    this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-};
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    this.x += this.velocity * dt;
-    if (this.x > 720) {
-        this.x = -60;
-        this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
-        this.velocity = (Math.random() * 240) + 120;
+class Game {
+    constructor() {
+        this.win = 0;
+        this.velocityMultiplier = 1;
     }
-};
-
-Enemy.prototype.distanceFromPlayer = function() {
-    return Math.sqrt(Math.pow(player.x - this.x, 2) + Math.pow(player.y - this.y, 2));
 }
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+class Enemy {
+    constructor () {
+        this.velocity = (Math.random() * 280) + 120;
+        this.x = -120;
+        this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
+        this.sprite = 'images/enemy-bug.png';
+    }
+
+    distanceFromPlayer() {
+        return Math.sqrt(Math.pow(player.x - this.x, 2) + Math.pow(player.y - this.y, 2));
+    }
+
+    update(dt) {
+        this.x += this.velocity * dt;
+        if (this.x > 720) {
+            this.x = -60;
+            this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
+            this.velocity = (Math.random() * 240 * game.velocityMultiplier) + 120 ;
+        }
+    }
+
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+}
 
 // Now write your own player class
 class Player {
@@ -50,6 +49,8 @@ class Player {
     update() {
         if (this.y < 56) {
             player.resetPosition();
+            game.win++;
+            game.velocityMultiplier++;
         }
 
         if (this.y > 400) {
@@ -107,11 +108,12 @@ class Gem {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var hasCollided = false;
-let allEnemies = [];
-let enemyInitialPosition = [56, 142, 228]
-let allGems = [];
-let gemNames = ['gem-blue', 'gem-orange', 'gem-green'];
-let gemPositions = { 
+let game = new Game();
+const allEnemies = [];
+const enemyInitialPosition = [56, 142, 228]
+const allGems = [];
+const gemNames = ['gem-blue', 'gem-orange', 'gem-green'];
+const gemPositions = { 
     x: [-2, 99, 200, 301, 402],
     y: [56, 142, 228]
     };
