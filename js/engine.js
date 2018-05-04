@@ -101,6 +101,7 @@ var Engine = (function(global) {
             if (enemy.distanceFromPlayer() < 40) 
                 hasCollided = true; 
         }
+
     }
 
     /* This function initially draws the "game level", it will then call

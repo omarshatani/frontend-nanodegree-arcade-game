@@ -1,13 +1,7 @@
-class Game {
-    constructor() {
-        this.win = 0;
-        this.velocityMultiplier = 1;
-    }
-}
-
 class Enemy {
     constructor () {
         this.velocity = (Math.random() * 280) + 120;
+        this.velocityMultiplier = 1;
         this.x = -120;
         this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
         this.sprite = 'images/enemy-bug.png';
@@ -22,7 +16,7 @@ class Enemy {
         if (this.x > 720) {
             this.x = -60;
             this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
-            this.velocity = (Math.random() * 240 * game.velocityMultiplier) + 120 ;
+            this.velocity = (Math.random() * 240 * enemy.velocityMultiplier) + 120 ;
         }
     }
 
@@ -39,6 +33,8 @@ class Player {
         this.x = 200;
         this.y = 400;
         this.sprite = 'images/char-boy.png';
+        this.wins = 0;
+        this.lives = 3;
     }
 
     resetPosition() {
@@ -49,8 +45,8 @@ class Player {
     update() {
         if (this.y < 56) {
             player.resetPosition();
-            game.win++;
-            game.velocityMultiplier++;
+            this.wins++;
+            enemy.velocityMultiplier++;
         }
 
         if (this.y > 400) {
@@ -65,6 +61,7 @@ class Player {
         if (hasCollided) {
             player.resetPosition();
             hasCollided = false;
+            this.lives--;
         }
     } 
 
@@ -96,6 +93,10 @@ class Gem {
         this.sprite = `images/${name}.png`;
     }
 
+    distanceFromPlayer() {
+        return Math.sqrt(Math.pow(player.x - this.x, 2) + Math.pow(player.y - this.y, 2));
+    }
+
         render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -108,7 +109,7 @@ class Gem {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var hasCollided = false;
-let game = new Game();
+var gemCollected = false;
 const allEnemies = [];
 const enemyInitialPosition = [56, 142, 228]
 const allGems = [];
@@ -118,19 +119,18 @@ const gemPositions = {
     y: [56, 142, 228]
     };
 
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 8; i++) {
     let enemy = new Enemy();
     enemy.name = i;
     allEnemies.push(enemy);
 }
 
+/*
 for (name of gemNames) {
     let gem = new Gem(name);
-
     allGems.push(gem);
-    
 }
-
+*/
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
