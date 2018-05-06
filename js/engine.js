@@ -160,12 +160,10 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(enemy => enemy.render());
-        
         if (!stopRendering)
             gem.render();
-
         player.render();
+        allEnemies.forEach(enemy => enemy.render());
     }
 
     /* This function does nothing but it could have been a good place to

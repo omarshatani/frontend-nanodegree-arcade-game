@@ -1,16 +1,27 @@
 /* TODO 
- * View the hearts on the screen 3
+ * View the hearts on the screen 4
  * Add lives logic 2 (Completed)
- * Add character selection 6
- * Finish game logic by adding difficulties 5
- * Add finish game result, with points 4
+ * Add character selection 7
+ * Finish game logic by adding difficulties 6
+ * Add finish game result, with points 5
  * Add gem logic 1 (Completed)
+ * Add Game class 4
  */
+
+class Game {
+    constructor () {
+        this.hearts = 3;
+        this.level = 1;
+        this.wins = 0;
+        this.points = 0;
+        this.gemCollected = 0;
+        this.difficulty = 1;
+    }
+}
 
 class Enemy {
     constructor () {
         this.velocity = (Math.random() * 280) + 120;
-        this.velocityMultiplier = 1;
         this.x = -120;
         this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
         this.sprite = 'images/enemy-bug.png';
@@ -25,7 +36,7 @@ class Enemy {
         if (this.x > 720) {
             this.x = -60;
             this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
-            this.velocity = (Math.random() * 240 * enemy.velocityMultiplier) + 120 ;
+            this.velocity = (Math.random() * 240 * game.difficulty) + 120 ;
         }
     }
 
@@ -38,12 +49,9 @@ class Enemy {
 // Now write your own player class
 class Player {
     constructor () {
-        this.moves = 0;
         this.x = 200;
         this.y = 400;
         this.sprite = 'images/char-boy.png';
-        this.wins = 0;
-        this.lives = 3;
     }
 
     resetPosition() {
@@ -54,8 +62,9 @@ class Player {
     update() {
         if (this.y < 56) {
             player.resetPosition();
-            this.wins++;
-            enemy.velocityMultiplier++;
+            game.wins++;
+            game.difficulty++;
+            game.level++;
             gem.stopRendering = false;
         }
 
@@ -71,7 +80,10 @@ class Player {
         if (hasCollided) {
             player.resetPosition();
             hasCollided = false;
-            this.lives--;
+            game.hearts--;
+            if (game.hearts === 0) {
+                console.log("YOU LOSE"); // TODO: change this thing with a proper result screen
+            }
         }
     } 
 
@@ -126,18 +138,20 @@ const enemyInitialPosition = [56, 142, 228]
 const allGems = [];
 const gemNames = ['gem-blue', 'gem-orange', 'gem-green'];
 const gemPositions = { 
-    x: [-2, 99, 200, 301, 402],
+    x: [-2, 101, 202, 303, 404],
     y: [56, 142, 228]
     };
 
+
+let game = new Game ();
+let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
+let player = new Player();
 for (let i = 0; i < 5; i++) {
     let enemy = new Enemy();
     enemy.name = i;
     allEnemies.push(enemy);
 }
 
-let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
-let player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
