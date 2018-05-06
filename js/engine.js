@@ -102,6 +102,9 @@ var Engine = (function(global) {
                 hasCollided = true; 
         }
 
+        if (gem.distanceFromPlayer() < 40)
+            stopRendering = true;
+
     }
 
     /* This function initially draws the "game level", it will then call
@@ -157,12 +160,10 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
-        allGems.forEach(function(gem) {
+        allEnemies.forEach(enemy => enemy.render());
+        
+        if (!stopRendering)
             gem.render();
-        });
 
         player.render();
     }

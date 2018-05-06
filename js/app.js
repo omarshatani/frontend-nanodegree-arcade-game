@@ -1,10 +1,10 @@
 /* TODO 
- * View the hearts on the screen
- * Add lives logic
- * Add character selection
- * Finish game logic by adding difficulties
- * Add finish game result, with points
- * Add gem logic
+ * View the hearts on the screen 3
+ * Add lives logic 2 (Completed)
+ * Add character selection 6
+ * Finish game logic by adding difficulties 5
+ * Add finish game result, with points 4
+ * Add gem logic 1 (Completed)
  */
 
 class Enemy {
@@ -56,6 +56,7 @@ class Player {
             player.resetPosition();
             this.wins++;
             enemy.velocityMultiplier++;
+            gem.stopRendering = false;
         }
 
         if (this.y > 400) {
@@ -119,6 +120,7 @@ class Gem {
 // Place the player object in a variable called player
 var hasCollided = false;
 var gemCollected = false;
+var stopRendering = false;
 const allEnemies = [];
 const enemyInitialPosition = [56, 142, 228]
 const allGems = [];
@@ -134,12 +136,7 @@ for (let i = 0; i < 5; i++) {
     allEnemies.push(enemy);
 }
 
-
-for (name of gemNames) {
-    let gem = new Gem(name);
-    allGems.push(gem);
-}
-
+let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
