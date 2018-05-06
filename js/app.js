@@ -1,3 +1,12 @@
+/* TODO 
+ * View the hearts on the screen
+ * Add lives logic
+ * Add character selection
+ * Finish game logic by adding difficulties
+ * Add finish game result, with points
+ * Add gem logic
+ */
+
 class Enemy {
     constructor () {
         this.velocity = (Math.random() * 280) + 120;
@@ -119,18 +128,18 @@ const gemPositions = {
     y: [56, 142, 228]
     };
 
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 5; i++) {
     let enemy = new Enemy();
     enemy.name = i;
     allEnemies.push(enemy);
 }
 
-/*
+
 for (name of gemNames) {
     let gem = new Gem(name);
     allGems.push(gem);
 }
-*/
+
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
