@@ -1,12 +1,18 @@
 /* TODO 
- * View the hearts on the screen 4
+ * View the hearts on the screen 5
  * Add lives logic 2 (Completed)
- * Add character selection 7
+ * Add character selection 8
  * Finish game logic by adding difficulties 6
- * Add finish game result, with points 5
+ * Add finish game result, with points 7
  * Add gem logic 1 (Completed)
- * Add Game class 4
+ * Add Game class 4 (completed)
  */
+
+ // Variables
+const mouse = {
+    x: undefined,
+    y: undefined
+}
 
 class Game {
     constructor () {
@@ -22,22 +28,38 @@ class Game {
 class Enemy {
     constructor () {
         this.velocity = (Math.random() * 280) + 120;
+        this.width = 60;
+        this.height = 30;
         this.x = -120;
         this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
         this.sprite = 'images/enemy-bug.png';
     }
 
     distanceFromPlayer() {
-        return Math.sqrt(Math.pow(player.x - this.x, 2) + Math.pow(player.y - this.y, 2));
+        const xDist = this.x - player.x;
+        const yDist = this.y - player.y;
+        return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
     }
+
+    horizontalDistance() {
+        return Math.abs(this.x - player.x);
+    }
+
+    verticalDistance() {
+        return Math.abs(this.y - player.y);
+    }
+
 
     update(dt) {
         this.x += this.velocity * dt;
         if (this.x > 720) {
             this.x = -60;
-            this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
-            this.velocity = (Math.random() * 240 * game.difficulty) + 120 ;
+            //this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
+            this.velocity = (Math.random() * 240 * game.difficulty) + 120;            
         }
+        //console.log(this.distanceFromPlayer());
+        console.log(`HorizontalDistance: ${this.horizontalDistance()}
+        VerticalDistance: ${this.verticalDistance()}`);
     }
 
     render() {
@@ -51,6 +73,7 @@ class Player {
     constructor () {
         this.x = 200;
         this.y = 400;
+        this.size = 70;
         this.sprite = 'images/char-boy.png';
     }
 
@@ -105,11 +128,14 @@ class Player {
             case 'down':
                 this.y += 86;
         }
+        console.log(`X: ${this.x}, Y: ${this.y}`);
     }
 }
 
 class Gem {
     constructor(name) {
+        this.width = 100;
+        this.height = 110;
         this.x = gemPositions.x[Math.floor((Math.random() * 5))];
         this.y = gemPositions.y[Math.floor((Math.random() * 3))];
         this.sprite = `images/${name}.png`;
@@ -135,22 +161,20 @@ var gemCollected = false;
 var stopRendering = false;
 const allEnemies = [];
 const enemyInitialPosition = [56, 142, 228]
-const allGems = [];
 const gemNames = ['gem-blue', 'gem-orange', 'gem-green'];
 const gemPositions = { 
     x: [-2, 101, 202, 303, 404],
     y: [56, 142, 228]
     };
 
-
 let game = new Game ();
 let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
 let player = new Player();
-for (let i = 0; i < 5; i++) {
+//for (let i = 0; i < 5; i++) {
     let enemy = new Enemy();
-    enemy.name = i;
+   // enemy.name = i;
     allEnemies.push(enemy);
-}
+//}
 
 
 // This listens for key presses and sends the keys to your
@@ -162,6 +186,5 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });

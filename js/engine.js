@@ -97,14 +97,14 @@ var Engine = (function(global) {
     }
 
     function checkCollisions () {
-        for (enemy of allEnemies) {
-            if (enemy.distanceFromPlayer() < 40) 
-                hasCollided = true; 
-        }
-
+        allEnemies.forEach(enemy => {
+            if (enemy.horizontalDistance() < enemy.width && enemy.verticalDistance() === 0 || 
+                enemy.verticalDistance() < enemy.height && enemy.horizontalDistance() === 0) {
+                player.resetPosition();
+            }
+        });
         if (gem.distanceFromPlayer() < 40)
             stopRendering = true;
-
     }
 
     /* This function initially draws the "game level", it will then call
