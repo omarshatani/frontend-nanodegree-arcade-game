@@ -8,12 +8,6 @@
  * Add Game class 4 (completed)
  */
 
- // Variables
-const mouse = {
-    x: undefined,
-    y: undefined
-}
-
 class Game {
     constructor () {
         this.hearts = 3;
@@ -54,12 +48,19 @@ class Enemy {
         this.x += this.velocity * dt;
         if (this.x > 720) {
             this.x = -60;
-            //this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
+            this.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
             this.velocity = (Math.random() * 240 * game.difficulty) + 120;            
         }
-        //console.log(this.distanceFromPlayer());
-        console.log(`HorizontalDistance: ${this.horizontalDistance()}
-        VerticalDistance: ${this.verticalDistance()}`);
+
+        if (this.horizontalDistance() < this.width && this.verticalDistance() === 0 || 
+            this.verticalDistance() < this.height && this.horizontalDistance() === 0) {
+            player.resetPosition();
+        }
+
+        /*if (player.x > this.x && player.x < this.x + this.width 
+            || player.y < this.y && player.y > this.y + this.height)
+            player.resetPosition();
+        */
     }
 
     render() {
@@ -73,7 +74,6 @@ class Player {
     constructor () {
         this.x = 200;
         this.y = 400;
-        this.size = 70;
         this.sprite = 'images/char-boy.png';
     }
 
@@ -170,11 +170,10 @@ const gemPositions = {
 let game = new Game ();
 let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
 let player = new Player();
-//for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 5; i++) {
     let enemy = new Enemy();
-   // enemy.name = i;
     allEnemies.push(enemy);
-//}
+}
 
 
 // This listens for key presses and sends the keys to your

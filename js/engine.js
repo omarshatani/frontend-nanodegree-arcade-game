@@ -97,12 +97,6 @@ var Engine = (function(global) {
     }
 
     function checkCollisions () {
-        allEnemies.forEach(enemy => {
-            if (enemy.horizontalDistance() < enemy.width && enemy.verticalDistance() === 0 || 
-                enemy.verticalDistance() < enemy.height && enemy.horizontalDistance() === 0) {
-                player.resetPosition();
-            }
-        });
         if (gem.distanceFromPlayer() < 40)
             stopRendering = true;
     }
