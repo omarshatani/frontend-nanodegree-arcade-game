@@ -86,7 +86,7 @@ class Player {
         if (this.y < 56) {
             player.resetPosition();
             game.wins++;
-            game.difficulty++;
+            game.difficulty += 0.5;
             game.level++;
             gem.stopRendering = false;
         }

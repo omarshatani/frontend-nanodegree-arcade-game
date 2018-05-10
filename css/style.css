@@ -1,3 +1,19 @@
 body {
-    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.scoreboard {
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.livesCounter {
+	text-align: center;
+}
+
+.livesCounter h1 {
+	margin-bottom: 0;
 }
