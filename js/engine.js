@@ -79,7 +79,6 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -94,16 +93,13 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        if (gems[0])
+            gems[0].update()
         game.update();
-    }
 
-    function checkCollisions () {
-        if (hasGem) {
-            if (gems[0].distanceFromPlayer() < 40) {
-                gems.pop();
-                hasGem = false;
-            }
-        }
+        if (game.hearts === 0)
+            reset();
+     
     }
 
     /* This function initially draws the "game level", it will then call
@@ -159,8 +155,8 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        if (hasGem)
-            gems[0].render(); 
+        if (gems.length > 0)
+            gems[0].render();
         player.render();
         allEnemies.forEach(enemy => enemy.render());
     }
@@ -170,7 +166,19 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        game.level = 1;
+        game.hearts = 3;
+        game.wins = 0;
+        game.points = 0;
+        game.gemCollected = 0;
+        game.difficulty = 1;
+
+        for (let i = 0; i < game.hearts; i++) {
+            let heart = document.querySelector('.livesCounter').insertAdjacentHTML('afterend','<img src="images/Heart.png" class="heart" alt="Heart" width="50" height="85" />');
+        }
+
+        let currentLevel = document.querySelector('.currentLevel');
+        currentLevel.innerText = game.level;
     }
 
     /* Go ahead and load all of the images we know we're going to need to

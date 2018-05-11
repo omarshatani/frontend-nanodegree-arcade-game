@@ -16,14 +16,13 @@ class Game {
         this.points = 0;
         this.gemCollected = 0;
         this.difficulty = 1;
-        this.newSpawnLevel = this.level + Math.floor((Math.random() * 3 + 1));
+        this.gemSpawnLevel = this.level + Math.floor((Math.random() * 3 + 1));
     }
     update () {
-        if (this.level === this.newSpawnLevel) {
+        if (this.level === this.gemSpawnLevel) {
             let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
             gems.push(gem);
-            hasGem = true;
-            this.newSpawnLevel += Math.floor((Math.random() * 3 + 1));
+            this.gemSpawnLevel += Math.floor((Math.random() * 4 + 1));
         }
 
         if (player.y < 56) {
@@ -31,9 +30,19 @@ class Game {
             this.wins++;
             this.difficulty += 0.5;
             this.level++;
+            let currentLevel = document.querySelector('.currentLevel').innerText++;
             gems.pop();
-            hasGem = false;
-            //gem.stopRendering = false;
+        }
+
+        if (hasCollided) {
+            hasCollided = false;
+            player.resetPosition();
+            this.hearts--;
+            let heart = document.querySelector('.heart');
+            heart.remove();
+            if (this.hearts === 0) {
+                console.log("YOU LOSE");
+            }   
         }
     }
 }
@@ -112,17 +121,6 @@ class Player {
             this.x = -2;
         if (this.x > 402) 
             this.x = 402;
-
-        if (hasCollided) {
-            hasCollided = false;
-            player.resetPosition();
-            player.lives--;
-            let heart = document.querySelector('.heart');
-            heart.remove();
-            if (player.lives === 0) {
-                console.log("YOU LOSE");
-            }   
-        }
     } 
 
     render() {
@@ -143,7 +141,6 @@ class Player {
             case 'down':
                 this.y += 86;
         }
-        console.log(`X: ${this.x}, Y: ${this.y}`);
     }
 }
 
@@ -160,16 +157,14 @@ class Gem {
         return Math.sqrt(Math.pow(player.x - this.x, 2) + Math.pow(player.y - this.y, 2));
     }
 
+    update() {
+        if (this.distanceFromPlayer() < 40) 
+            gems.pop();
+    }     
+
         render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-}
-
-function createGem() {
-    let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
-    gems.push(gem);
-    console.log(gems);
-    stopRendering = false;
 }
 
 // This class requires an update(), render() and
@@ -181,7 +176,7 @@ function createGem() {
 var hasCollided = false;
 var gemCollected = false;
 var stopRendering = false;
-var hasGem = false;
+
 const allEnemies = [];
 const enemyInitialPosition = [56, 142, 228];
 const gems = [];
