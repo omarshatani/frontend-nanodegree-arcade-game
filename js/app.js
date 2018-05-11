@@ -16,6 +16,13 @@ class Game {
         this.points = 0;
         this.gemCollected = 0;
         this.difficulty = 1;
+        this.newSpawnLevel = this.level + Math.floor((Math.random() * 3 + 1));
+    }
+    update () {
+        if (this.level === this.newSpawnLevel) {
+            //createGem();
+            this.newSpawnLevel += Math.floor((Math.random() * 3 + 1));
+        }
     }
 }
 
@@ -54,7 +61,7 @@ class Enemy {
 
         if (this.horizontalDistance() < this.width && this.verticalDistance() === 0 || 
             this.verticalDistance() < this.height && this.horizontalDistance() === 0) {
-            player.resetPosition();
+            hasCollided = true;
         }
 
         /*if (player.x > this.x && player.x < this.x + this.width 
@@ -74,6 +81,7 @@ class Player {
     constructor () {
         this.x = 200;
         this.y = 400;
+        this.lives = 3;
         this.sprite = 'images/char-boy.png';
     }
 
@@ -88,7 +96,7 @@ class Player {
             game.wins++;
             game.difficulty += 0.5;
             game.level++;
-            gem.stopRendering = false;
+            //gem.stopRendering = false;
         }
 
         if (this.y > 400) {
@@ -101,12 +109,14 @@ class Player {
             this.x = 402;
 
         if (hasCollided) {
-            player.resetPosition();
             hasCollided = false;
-            game.hearts--;
-            if (game.hearts === 0) {
-                console.log("YOU LOSE"); // TODO: change this thing with a proper result screen
-            }
+            player.resetPosition();
+            player.lives--;
+            let heart = document.querySelector('.heart');
+            heart.remove();
+            if (player.lives === 0) {
+                console.log("YOU LOSE");
+            }   
         }
     } 
 
@@ -150,6 +160,13 @@ class Gem {
     }
 }
 
+function createGem() {
+    let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
+    gems.push(gem);
+    console.log(gems);
+    stopRendering = false;
+}
+
 // This class requires an update(), render() and
 // a handleInput() method.
 
@@ -161,15 +178,17 @@ var gemCollected = false;
 var stopRendering = false;
 const allEnemies = [];
 const enemyInitialPosition = [56, 142, 228]
+const gems = {};
 const gemNames = ['gem-blue', 'gem-orange', 'gem-green'];
 const gemPositions = { 
     x: [-2, 101, 202, 303, 404],
     y: [56, 142, 228]
     };
 
-let game = new Game ();
-let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
+let game = new Game();
 let player = new Player();
+let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
+
 for (let i = 0; i < 5; i++) {
     let enemy = new Enemy();
     allEnemies.push(enemy);

@@ -94,11 +94,15 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        game.update();
     }
 
     function checkCollisions () {
-        if (gem.distanceFromPlayer() < 40)
-            stopRendering = true;
+        if (gems.length > 0) {
+         if (gems[0].distanceFromPlayer() < 40)
+            stopRendering = true; 
+            gems.pop();
+        }
     }
 
     /* This function initially draws the "game level", it will then call
@@ -154,8 +158,7 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        if (!stopRendering)
-            gem.render();
+        
         player.render();
         allEnemies.forEach(enemy => enemy.render());
     }
