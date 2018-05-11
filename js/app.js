@@ -20,8 +20,20 @@ class Game {
     }
     update () {
         if (this.level === this.newSpawnLevel) {
-            //createGem();
+            let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
+            gems.push(gem);
+            hasGem = true;
             this.newSpawnLevel += Math.floor((Math.random() * 3 + 1));
+        }
+
+        if (player.y < 56) {
+            player.resetPosition();
+            this.wins++;
+            this.difficulty += 0.5;
+            this.level++;
+            gems.pop();
+            hasGem = false;
+            //gem.stopRendering = false;
         }
     }
 }
@@ -91,13 +103,6 @@ class Player {
     }
 
     update() {
-        if (this.y < 56) {
-            player.resetPosition();
-            game.wins++;
-            game.difficulty += 0.5;
-            game.level++;
-            //gem.stopRendering = false;
-        }
 
         if (this.y > 400) {
             this.y = 400;
@@ -176,18 +181,17 @@ function createGem() {
 var hasCollided = false;
 var gemCollected = false;
 var stopRendering = false;
+var hasGem = false;
 const allEnemies = [];
-const enemyInitialPosition = [56, 142, 228]
-const gems = {};
+const enemyInitialPosition = [56, 142, 228];
+const gems = [];
 const gemNames = ['gem-blue', 'gem-orange', 'gem-green'];
 const gemPositions = { 
     x: [-2, 101, 202, 303, 404],
     y: [56, 142, 228]
     };
-
 let game = new Game();
 let player = new Player();
-let gem = new Gem(gemNames[Math.floor((Math.random() * 3))]);
 
 for (let i = 0; i < 5; i++) {
     let enemy = new Enemy();

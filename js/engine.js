@@ -98,10 +98,11 @@ var Engine = (function(global) {
     }
 
     function checkCollisions () {
-        if (gems.length > 0) {
-         if (gems[0].distanceFromPlayer() < 40)
-            stopRendering = true; 
-            gems.pop();
+        if (hasGem) {
+            if (gems[0].distanceFromPlayer() < 40) {
+                gems.pop();
+                hasGem = false;
+            }
         }
     }
 
@@ -158,7 +159,8 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        
+        if (hasGem)
+            gems[0].render(); 
         player.render();
         allEnemies.forEach(enemy => enemy.render());
     }
