@@ -63,7 +63,6 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
         lastTime = Date.now();
         main();
     }
@@ -96,10 +95,6 @@ var Engine = (function(global) {
         if (gems[0])
             gems[0].update()
         game.update();
-
-        if (game.hearts === 0)
-            reset();
-     
     }
 
     /* This function initially draws the "game level", it will then call
@@ -157,30 +152,10 @@ var Engine = (function(global) {
          */
         if (gems.length > 0)
             gems[0].render();
+        if (game.hearts != 0)
         player.render();
         allEnemies.forEach(enemy => enemy.render());
     }
-
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-    function reset() {
-        game.level = 1;
-        game.hearts = 3;
-        game.wins = 0;
-        game.points = 0;
-        game.gemCollected = 0;
-        game.difficulty = 1;
-
-        for (let i = 0; i < game.hearts; i++) {
-            let heart = document.querySelector('.livesCounter').insertAdjacentHTML('afterend','<img src="images/Heart.png" class="heart" alt="Heart" width="50" height="85" />');
-        }
-
-        let currentLevel = document.querySelector('.currentLevel');
-        currentLevel.innerText = game.level;
-    }
-
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
@@ -203,3 +178,30 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
 })(this);
+
+document.addEventListener('DOMContentLoaded', function () {
+    let retryButton = document.querySelector('.retry');
+    retryButton.addEventListener('click', function () {
+        
+        game.level = 1;
+        game.hearts = 3;
+        game.wins = 0;
+        game.points = 0;
+        game.gemCollected = 0;
+        game.difficulty = 1;
+
+        allEnemies.forEach(enemy => {
+            enemy.velocity = (Math.random() * 280) + 120;
+            enemy.x = -120;
+            enemy.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
+        });
+
+        for (let i = 0; i < game.hearts; i++) {
+            let heart = document.querySelector('.livesCounter').insertAdjacentHTML('afterend','<img src="images/Heart.png" class="heart" alt="Heart" width="50" height="85" />');
+        }
+
+        let currentLevel = document.querySelector('.currentLevel');
+        currentLevel.innerText = game.level;
+        retryButton.setAttribute('disabled', '""');
+    });
+});

@@ -39,10 +39,13 @@ class Game {
             player.resetPosition();
             this.hearts--;
             let heart = document.querySelector('.heart');
-            heart.remove();
-            if (this.hearts === 0) {
-                console.log("YOU LOSE");
-            }   
+            heart.remove(); 
+        }
+
+        if (game.hearts === 0) {
+            allEnemies.forEach(enemy => enemy.velocity = 0);
+            let retryButton = document.querySelector('.retry');
+            retryButton.removeAttribute('disabled');
         }
     }
 }
@@ -112,13 +115,12 @@ class Player {
     }
 
     update() {
-
-        if (this.y > 400) {
+        if (this.y > 400)
             this.y = 400;
-        }
 
         if (this.x < -2) 
             this.x = -2;
+
         if (this.x > 402) 
             this.x = 402;
     } 
@@ -176,6 +178,7 @@ class Gem {
 var hasCollided = false;
 var gemCollected = false;
 var stopRendering = false;
+var reset = false;
 
 const allEnemies = [];
 const enemyInitialPosition = [56, 142, 228];
@@ -185,9 +188,9 @@ const gemPositions = {
     x: [-2, 101, 202, 303, 404],
     y: [56, 142, 228]
     };
+
 let game = new Game();
 let player = new Player();
-
 for (let i = 0; i < 5; i++) {
     let enemy = new Enemy();
     allEnemies.push(enemy);
