@@ -1,14 +1,3 @@
-/* TODO 
- * View the hearts on the screen 5
- * Add lives logic 2 (Completed)
- * Add character selection 8
- * Finish game logic by adding difficulties 6
- * Add finish game result, with points 7
- * Add gem logic 1 (Completed)
- * Add Game class 4 (completed)
- */
-
-
 //This class contains the game logic, with the score and lives.
 class Game {
     constructor () {
@@ -186,12 +175,7 @@ class Gem {
     }
 }
 
-// This class requires an update(), render() and
-// a handleInput() method.
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+// Variables declaration
 var hasCollided = false;
 var gemCollected = false;
 var stopRendering = false;
@@ -208,7 +192,6 @@ const gemPositions = {
     x: [-2, 101, 202, 303, 404],
     y: [56, 142, 228]
     };
-
 let game = new Game();
 let player = new Player();
 for (let i = 0; i < 5; i++) {
@@ -217,8 +200,7 @@ for (let i = 0; i < 5; i++) {
 }
 
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+//Listeners for keys and retry button click
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
