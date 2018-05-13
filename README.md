@@ -8,12 +8,12 @@ In this game the player objective is to get the highest score by collecting Gems
 But it won't be easy: there'll be some enemies on the road that you'll have to dodge!
 The enemies will become faster as the player wins the levels.
 
-## Game over
+## Game Over
 
 If the player collides with the enemies 3 times, it'll lose all of his hearts and die. 
 The player then can decide to start a new Game by hitting the **RETRY** button.
 
-## Scoring points
+## Scoring Points
 
 The player can score points by:
 
