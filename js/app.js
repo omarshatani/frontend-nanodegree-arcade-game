@@ -1,4 +1,4 @@
-//This class contains the game logic, with the score and lives.
+// This class contains the game logic, with the score and lives.
 class Game {
     constructor () {
         this.hearts = 3;
@@ -101,7 +101,6 @@ class Enemy {
     }
 
 }
-
 // This class contains all of the Player properties and methods
 class Player {
     constructor () {
@@ -180,7 +179,6 @@ var hasCollided = false;
 var gemCollected = false;
 var stopRendering = false;
 var reset = false;
-
 // Array that contains all the enemies
 const allEnemies = [];
 const enemyInitialPosition = [56, 142, 228];
@@ -199,8 +197,7 @@ for (let i = 0; i < 5; i++) {
     allEnemies.push(enemy);
 }
 
-
-//Listeners for keys and retry button click
+// Listeners for handling the keys
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
