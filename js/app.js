@@ -52,6 +52,7 @@ class Game {
             allEnemies.forEach(enemy => enemy.velocity = 0);
             let retryButton = document.querySelector('.retry');
             retryButton.removeAttribute('disabled');
+            disableKeys = true;
         }
     }
 }
@@ -132,18 +133,20 @@ class Player {
     }
 
     handleInput(key) {
-        switch (key) {
-            case 'left': 
-                this.x -= 101;
-                break;
-            case 'up':
-                this.y -= 86;
-                break;
-            case 'right':
-                this.x += 101;
-                break;
-            case 'down':
-                this.y += 86;
+        if (!disableKeys) {
+            switch (key) {
+                case 'left': 
+                    this.x -= 101;
+                    break;
+                case 'up':
+                    this.y -= 86;
+                    break;
+                case 'right':
+                    this.x += 101;
+                    break;
+                case 'down':
+                    this.y += 86;
+            }
         }
     }
 }
@@ -179,6 +182,7 @@ var hasCollided = false;
 var gemCollected = false;
 var stopRendering = false;
 var reset = false;
+var disableKeys = false;
 // Array that contains all the enemies
 const allEnemies = [];
 const enemyInitialPosition = [56, 142, 228];
@@ -234,5 +238,6 @@ document.addEventListener('DOMContentLoaded', function () {
         let currentScore = document.querySelector('.currentScore');
         currentScore.innerText = game.points;
         retryButton.setAttribute('disabled', '""');
+        disableKeys = false;
     });
 });
