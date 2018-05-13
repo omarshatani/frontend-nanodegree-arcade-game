@@ -3,11 +3,17 @@ body {
     display: flex;
     justify-content: center;
     overflow-x: hidden;
+    font-family: 'Luckiest Guy', cursive;
 }
 
 .scoreboard {
 	margin-left: 30px;
 	margin-top: 30px;
+	text-align: center;
+}
+
+.scoreboard p {
+	font-size: 1.5em;
 }
 
 .livesCounter {
@@ -31,4 +37,32 @@ body {
 
 .hidden {
 	display: none;
+}
+
+button {
+	background-color: #2196f3;
+    border-style: solid;
+    border-width: 0px 0px 3px;
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+    color: #FFFFFF;	   
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    font-style: normal;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: all 200ms ease-in-out 0s;
+    white-space: nowrap;	
+    font-family: "Gotham Rounded A","Gotham Rounded B",Helvetica,Arial,sans-serif;
+    font-weight: 700;	
+    padding: 19px 39px 18px;
+    font-size: 18px;
+}
+
+button:disabled,
+button[disabled] {
+	background-color: #ccc;
+	cursor: default;
 }

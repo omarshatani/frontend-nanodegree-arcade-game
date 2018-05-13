@@ -179,29 +179,3 @@ var Engine = (function(global) {
     global.ctx = ctx;
 })(this);
 
-document.addEventListener('DOMContentLoaded', function () {
-    let retryButton = document.querySelector('.retry');
-    retryButton.addEventListener('click', function () {
-        
-        game.level = 1;
-        game.hearts = 3;
-        game.wins = 0;
-        game.points = 0;
-        game.gemCollected = 0;
-        game.difficulty = 1;
-
-        allEnemies.forEach(enemy => {
-            enemy.velocity = (Math.random() * 280) + 120;
-            enemy.x = -120;
-            enemy.y = enemyInitialPosition[Math.floor((Math.random() * 3))];
-        });
-
-        for (let i = 0; i < game.hearts; i++) {
-            let heart = document.querySelector('.livesCounter').insertAdjacentHTML('afterend','<img src="images/Heart.png" class="heart" alt="Heart" width="50" height="85" />');
-        }
-
-        let currentLevel = document.querySelector('.currentLevel');
-        currentLevel.innerText = game.level;
-        retryButton.setAttribute('disabled', '""');
-    });
-});
