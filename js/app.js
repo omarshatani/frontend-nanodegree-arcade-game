@@ -18,7 +18,7 @@ class Game {
         this.points = 0;
         this.gemCollected = 0;
         this.difficulty = 1;
-        //This property creates a random level where a new gem will spawn
+        // This property creates a random level where a new gem will spawn
         this.gemSpawnLevel = this.level + Math.floor((Math.random() * 3 + 1));
     }
     update () {

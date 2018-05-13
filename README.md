@@ -1,6 +1,35 @@
-frontend-nanodegree-arcade-game
-===============================
+# Arcade Game Project
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+**Arcade Game** is a interactive HTML5 & JavaScript game.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Game description
+
+In this game the player objective is to get the highest score by collecting Gems and reaching higher levels.
+But it won't be easy: there'll be some enemies on the road that you'll have to dodge!
+The enemies will become faster as the player wins the levels.
+
+## Game over
+
+If the player collides with the enemies 3 times, it'll lose all of his hearts and die. 
+The player then can decide to start a new Game by hitting the **RETRY** button.
+
+## Scoring points
+
+The player can score points by:
+
+ 1. Reaching the sea: **300 points**
+ 2. Collect a gem: **200 points**
+
+The score will be reset to 0 if the player dies.
+
+## How to move the character
+
+The player character can move using the arrow keys (←, →, ↓, ↑).
+
+## Game load
+
+The game needs the [app](js/app.js), [engine](js/engine.js) and [resources](js/resources.js) files to load correctly. 
+
+## Licence
+
+MIT
