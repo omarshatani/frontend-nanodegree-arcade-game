@@ -182,6 +182,7 @@ var hasCollided = false;
 var gemCollected = false;
 var stopRendering = false;
 var reset = false;
+// Boolean used to disable the arrow keys after the player loses
 var disableKeys = false;
 // Array that contains all the enemies
 const allEnemies = [];
